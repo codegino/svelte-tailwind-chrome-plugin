@@ -1,11 +1,9 @@
 # Svelte + TS + Vite + Tailwind + CRXJS
 
 ## Running the app
-1. Create the distributable files
-```bash
-npm run dev
-```
-2. Open chrome://extensions/
-3. Enable Developer Mode
-4. Click `Load Unpacked`
-5. Point to the `dist` folder
+1. `npm install`
+2. Create distributable files using `npm run dev` OR `npm run build`
+3. Open chrome://extensions/
+4. Enable Developer Mode
+5. Click `Load Unpacked`
+6. Point to the `dist` folder
