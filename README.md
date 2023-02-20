@@ -1,4 +1,4 @@
-# Svelte + TS + Vite + Tailwin + CRXJS
+# Svelte + TS + Vite + Tailwind + CRXJS
 
 ## Running the app
 1. Create the distributable files
