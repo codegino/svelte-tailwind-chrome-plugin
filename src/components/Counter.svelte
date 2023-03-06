@@ -1,18 +1,44 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   export let count: number;
   let message: string = null;
+
+  onMount(() => {
+    chrome.runtime.onMessage.addListener(handleMessageEvent);
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessageEvent);
+    };
+  });
+
+  function handleMessageEvent(request, _, sendResponse) {
+    if (request.type === "count_updated") {
+      sendResponse({ message: `from ${count} to ${request.count}` });
+      count = request.count;
+    }
+  }
 
   const increment = () => (count += 1);
   const decrement = () => (count -= 1);
 
-  const handleSave = () => {
-    chrome.storage.sync.set({count}).then(() => {
-      message = 'Updated!';
+  const handleSave = async () => {
+    await chrome.storage.sync.set({ count });
+    message = "Updated!";
 
-      setTimeout(() => {
-        message = null;
-      }, 2000);
-    });
+    try {
+      const res = await chrome.runtime.sendMessage({
+        count,
+        type: "count_updated",
+      });
+      message += ` ${res.message}`;
+    } catch (error) {
+      // Handle error here
+      console.log("TODO:", error);
+    }
+
+    setTimeout(() => {
+      message = null;
+    }, 2000);
   };
 </script>
 
