@@ -9,5 +9,14 @@
   "chrome_url_overrides": {
     "newtab": "src/new-tab/index.html"
   },
-  "permissions": ["storage"]
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+        "matches": ["https://*/*"],
+        "js": ["src/content/index.ts"]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background/index.ts"
+  }
 }
